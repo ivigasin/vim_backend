@@ -12,15 +12,12 @@ export function createUserRouter(userRepository: UserRepository) {
   const userController = new UserController(userService);
 
   router.get('/', userController.getAllUsers);
-  // Apply validation middleware to the POST route
-  router.post('/', validateRequest(createUserSchema), userController.createUserPreferences);
-  
+  router.post('/', validateRequest(createUserSchema), userController.createUserPreferences);  
   /**
    * This method is not implemented as a standard RESTful PUT endpoint.
    * According to the requirements,
    * the user update is performed based on properties provided in the request body.
    */
-  // Apply validation middleware to the PUT route
   router.put('/', validateRequest(editUserSchema), userController.editUserPreferences);
 
   return router;

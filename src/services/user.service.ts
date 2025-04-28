@@ -14,6 +14,7 @@ export class UserService {
   public getUserById = async (userId: string): Promise<User | null> => {
     console.log(`[UserService] Fetching user by ID: ${userId}`);
     const user = await this.userRepository.findById(userId);
+    
     if (user) {
       console.log(`[UserService] User found: ${userId}`);
     } else {

@@ -1,8 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { User } from '../models/user.model';
 import { UserService } from '../services/user.service';
-import { NotFoundError } from '../error/notfound.error';
-
 export class UserController {
     constructor(private userService: UserService) {}
     
