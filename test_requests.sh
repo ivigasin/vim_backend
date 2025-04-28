@@ -156,7 +156,3 @@ curl -X POST "${BASE_URL}/notification/" \
 -d '{
   "message": "A message without a recipient."
 }'
-
-# 17. Get All Users
-curl -X GET "${BASE_URL}/users/" \
--H "${AUTH_HEADER}"

@@ -1,8 +1,4 @@
-export const sleep = (ms: number): Promise<void> => {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  };
-  
-  export interface RateLimiterOptions {
+ export interface RateLimiterOptions {
     rateLimit: number;  
     rateLimitWindowMs: number;
     endpointName?: string;
@@ -10,6 +6,10 @@ export const sleep = (ms: number): Promise<void> => {
     initialBackoffMs?: number; 
     maxChunkSize?: number;
   }
+
+  export const sleep = (ms: number): Promise<void> => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  };
   
   export class RateLimiter {
     private allowedRequests: number;

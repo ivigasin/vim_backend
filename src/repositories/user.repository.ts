@@ -1,30 +1,27 @@
-import { console } from 'inspector';
 import { ConflictError } from '../error/conflict.error';
 import { NotFoundError } from '../error/notfound.error';
 import { User, UserUpdateCriteria } from '../models/user.model';
 
-
-
 export class UserRepository {
     private users: User[] = [];
     
-    public findAll = async (): Promise<User[]> => {
+    public findAll = (): User[] => {
         return this.users;        
     };
 
-    public findById = async (userId: string): Promise<User | null> => {
+    public findById = (userId: string): User | null => {
         return this.users.find(user => user.userId === userId) || null;
     };
 
-    public findByEmail = async (email: string): Promise<User | null> => {
+    public findByEmail = (email: string): User | null => {
         return this.users.find(user => user.email === email) || null;
     };
 
-    public findByTelephone = async (telephone: string): Promise<User | null> => {
+    public findByTelephone = (telephone: string): User | null => {
         return this.users.find(user => user.telephone === telephone) || null;
     };
 
-    public create = async (userData: Omit<User, 'userId'>): Promise<User> => {        
+    public create =  (userData: Omit<User, 'userId'>): User => {        
         if(this.emailExists(userData.email)) {
             throw new ConflictError(`Email ${userData.email} already exists`)
         }
@@ -42,8 +39,8 @@ export class UserRepository {
         return newUser;
     }
 
-    public updatePreferences = async (criteria: UserUpdateCriteria, preferences: User['preferences']): Promise<User> => {
-        const user = await this.findUserByCriteria(criteria);
+    public updatePreferences =  (criteria: UserUpdateCriteria, preferences: User['preferences']): User => {
+        const user =  this.findUserByCriteria(criteria);
         if(!user) {
             throw new NotFoundError(`User not found`);    
         }
@@ -51,10 +48,8 @@ export class UserRepository {
         return user;
     }
 
-    public findUserByCriteria = async (criteria: UserUpdateCriteria): Promise<User | null> => {
-        console.log('criteria', criteria);
-        const { userId, email} = criteria;        
-        console.log('users', this.users);
+    public findUserByCriteria =  (criteria: UserUpdateCriteria): User | null => {        
+        const { userId, email} = criteria;                
 
         return this.users.find(user => 
             (email && user.email === email) ||            

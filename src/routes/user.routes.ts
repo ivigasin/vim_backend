@@ -11,7 +11,6 @@ export function createUserRouter(userRepository: UserRepository) {
   const userService = new UserService(userRepository);
   const userController = new UserController(userService);
 
-  router.get('/', userController.getAllUsers);
   router.post('/', validateRequest(createUserSchema), userController.createUserPreferences);  
   /**
    * This method is not implemented as a standard RESTful PUT endpoint.

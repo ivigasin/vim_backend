@@ -15,15 +15,6 @@ export class UserController {
         }
     }
 
-    public  getAllUsers = async(req: Request, res: Response, next: NextFunction) => {
-        try {
-            const users = await this.userService.getAllUsers();
-            res.status(200).json(users);
-        } catch (error) {
-            next(error)
-        }
-    }
-
     public editUserPreferences =  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
            const { email, telephone, preferences } = req.body;
