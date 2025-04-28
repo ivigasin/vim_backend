@@ -22,7 +22,7 @@ export const sleep = (ms: number): Promise<void> => {
       console.log(`[RateLimiter] Initialized with options:`, options);
     }
   
-    private shouldAllow(currentTimestamp: number): boolean {
+    private shouldAllow = (currentTimestamp: number): boolean => {
       const windowStart = currentTimestamp - this.timeFrameSize;
   
       while (this.timestamps.length > 0 && this.timestamps[this.timestamps.length - 1] <= windowStart) {

@@ -2,6 +2,8 @@ import { Router } from 'express';
 import { UserService } from '../services/user.service';
 import { UserController } from '../controllers/user.controller';
 import { UserRepository } from '../repositories/user.repository';
+import { validateRequest } from '../middlewares/validation.middleware'; // Import the validation middleware
+import { createUserSchema, editUserSchema } from '../validators/user.validator'; // Import the schemas
 
 export function createUserRouter(userRepository: UserRepository) {
   const router = Router();
@@ -10,14 +12,16 @@ export function createUserRouter(userRepository: UserRepository) {
   const userController = new UserController(userService);
 
   router.get('/', userController.getAllUsers);
-  router.post('/', userController.createUserPreferences);
+  // Apply validation middleware to the POST route
+  router.post('/', validateRequest(createUserSchema), userController.createUserPreferences);
   
   /**
    * This method is not implemented as a standard RESTful PUT endpoint.
    * According to the requirements,
    * the user update is performed based on properties provided in the request body.
    */
-  router.put('/', userController.editUserPreferences);
+  // Apply validation middleware to the PUT route
+  router.put('/', validateRequest(editUserSchema), userController.editUserPreferences);
 
   return router;
 }
