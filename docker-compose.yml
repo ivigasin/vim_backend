@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - notification-service
+    environment:
+      - PORT=8080
+      - ALLOWED_USERNAME=onlyvim2024
+
+      
+      - NOTIFICATION_EMAIL_ENDPOINT=http://notification-service:5001/send-email
+      - NOTIFICATION_EMAIL_HTTP_METHOD=POST
+      - NOTIFICATION_EMAIL_USER_PROPERTY=email
+      - NOTIFICATION_EMAIL_RATE_LIMIT=5
+      - NOTIFICATION_EMAIL_TIME_WINDOW_MS=1000
+      - NOTIFICATION_EMAIL_MAX_RETRIES=5
+      - NOTIFICATION_EMAIL_INITIAL_BACKOFF_MS=1000
+
+
+      
+      - NOTIFICATION_SMS_ENDPOINT=http://notification-service:5001/send-sms
+      - NOTIFICATION_SMS_HTTP_METHOD=POST
+      - NOTIFICATION_SMS_USER_PROPERTY=telephone
+      - NOTIFICATION_SMS_RATE_LIMIT=1
+      - NOTIFICATION_SMS_TIME_WINDOW_MS=1000
+      - NOTIFICATION_SMS_ERROR_RATE=0.05
+      - NOTIFICATION_SMS_MAX_RETRIES=3
+      - NOTIFICATION_SMS_INITIAL_BACKOFF_MS=1000
+
+  notification-service:
+    image: aryekog/backend-interview-notifications-service:0.0.2
+    ports:
+      - "5001:5001"
+    environment:
+      - EMAIL_RATE_LIMIT=5
+      - SMS_RATE_LIMIT=5
+      - RATE_LIMIT_WINDOW_MS=1000
+      - ERROR_RATE=0.1
