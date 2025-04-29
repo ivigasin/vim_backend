@@ -23,7 +23,7 @@ export class NotificationService {
             throw new BadRequestError('Missing required fields');
         }
     
-        const user = await this.userRepository.findUserByCriteria({ userId , email });
+        const user = this.userRepository.findUserByCriteria({ userId , email });
         if(!user) {
             throw new NotFoundError('User not found');
         }
